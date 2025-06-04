@@ -1,69 +1,68 @@
-import { Suspense } from "react";
-import Link from "next/link";
+'use client';
 
-import { AllPosts } from "@/app/components/Posts";
-import GetStartedCode from "@/app/components/GetStartedCode";
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import Navigation from './components/Navigation';
+import HeroText from './components/HeroText';
+import LoadingScreen from './components/LoadingScreen';
+import ServicesBox from './components/ServicesBox';
 
-export default async function Page() {
+// Dynamically import SpaceScene to avoid SSR issues with Three.js
+const SpaceScene = dynamic(() => import('./components/three/SpaceScene'), {
+  ssr: false,
+  loading: () => (
+    <div className="fixed top-0 left-0 w-full h-screen bg-black flex items-center justify-center">
+      <div className="text-white text-2xl">Loading...</div>
+    </div>
+  ),
+});
+
+export default function Page() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <>
-      <div className="bg-gradient-to-r from-red-200 from-0% via-white via-40%  relative">
-        <div className="bg-gradient-to-b from-white w-full h-40 absolute top-0"></div>
-        <div className="bg-gradient-to-t from-white w-full h-40 absolute bottom-0"></div>
-        <div className="container relative">
-          <div className="mx-auto max-w-2xl py-20 lg:max-w-4xl lg:px-12 text-center">
-            <div className="flex flex-col gap-4 items-center">
-              <div className=" text-md leading-6 prose uppercase">
-                A starter template for
-              </div>
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-black">
-                <Link className="text-red-500 " href="https://sanity.io/">
-                  Sanity
-                </Link>{" "}
-                +{" "}
-                <Link className="text-[#000] " href="https://nextjs.org/">
-                  Next.js
-                </Link>
-              </h1>
-            </div>
-            <div className="mt-6 space-y-6 prose sm:prose-lg md:prose-xl lg:prose-2xl text-gray-700">
-              <p>
-                This starter is a statically generated site that uses Next.js
-                for the frontend and Sanity to handle its content. It comes with
-                a standalone Sanity Studio that offers features like real-time
-                collaboration, instant side-by-side content previews, and
-                intuitive editing.
-              </p>
-            </div>
-            <div className="flex items-center flex-col gap-4">
-              <GetStartedCode />
-              <Link
-                href="https://www.sanity.io/docs"
-                className="inline-flex text-red-500 text-xs md:text-sm underline hover:text-gray-900"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Sanity Documentation
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 ml-1 inline"
-                  fill="currentColor"
-                >
-                  <path d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 14.2071L9.79289 12.7929L15.792 6.793L12 3H21Z"></path>
-                </svg>
-              </Link>
-            </div>
+    <main className="relative min-h-screen bg-black">
+      {isLoading ? (
+        <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+      ) : (
+        <>
+          <SpaceScene />
+          <Navigation />
+          <div className="relative z-10 min-h-screen flex flex-col items-center pt-24">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white text-center mb-6">
+              Bespoke Digital Transformations
+            </h1>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white text-center">
+              Website and App Development
+            </h2>
           </div>
-        </div>
-      </div>
-      <div className="border-t border-gray-10">
-        <div className="container">
-          <aside className="py-12 sm:py-20">
-            <Suspense>{await AllPosts()}</Suspense>
-          </aside>
-        </div>
-      </div>
-    </>
+
+          <section id="services" className="min-h-screen relative z-10">
+            <div className="container mx-auto px-4 py-12 flex flex-col items-center justify-center space-y-12">
+              <h5 className="text-4xl md:text-5xl lg:text-6xl font-light text-white text-center">Your Vision, Our Execution</h5>
+              <ServicesBox />
+            </div>
+          </section>
+
+          <section id="projects" className="min-h-screen relative z-10">
+            <div className="container mx-auto px-4 py-20">
+              <h2 className="text-4xl font-bold text-white mb-8">Our Projects</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Project cards will go here */}
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" className="min-h-screen relative z-10">
+            <div className="container mx-auto px-4 py-20">
+              <h2 className="text-4xl font-bold text-white mb-8">Contact Us</h2>
+              <div className="max-w-2xl mx-auto">
+                {/* Contact form will go here */}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+    </main>
   );
-}
+} 
