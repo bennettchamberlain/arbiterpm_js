@@ -1,3 +1,107 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.metallic-card2 {
+  background: linear-gradient(135deg, #44474a 0%, #888b8e 40%, #232426 100%);
+  border-radius: 1rem;
+  box-shadow:
+    0 8px 32px 0 rgba(30, 30, 30, 0.35),
+    0 2.5px 0 0 #fff inset,
+    0 -2.5px 0 0 #888 inset;
+  border: 2px solid #d1d5db;
+  padding: 2.5rem 2rem;
+  min-width: 420px;
+  max-width: 600px;
+  transition: transform 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  position: relative;
+  overflow: visible;
+  perspective: 800px;
+}
+
+.metallic-card2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  background: linear-gradient(120deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.metallic-card2:hover {
+  transform: translateY(-8px) scale(1.03) rotateX(6deg);
+  box-shadow:
+    0 16px 48px 0 rgba(30, 30, 30, 0.40),
+    0 2.5px 0 0 #fff inset,
+    0 -2.5px 0 0 #888 inset;
+}
+
+.metallic-card2 h3, .metallic-card p {
+  position: relative;
+  z-index: 2;
+}
+
+.bubble-card2 {
+  min-width: 340px;
+  max-width: 600px;
+  border-radius: 1rem;
+}
+
+.bubble-highlight2 {
+  box-shadow: 0 0 60px 20px rgba(255,255,255,0.25);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+.metallic-card {
+  background: linear-gradient(135deg, #44474a 0%, #888b8e 40%, #232426 100%);
+  border-radius: 2.5rem;
+  box-shadow:
+    0 8px 32px 0 rgba(30, 30, 30, 0.35),
+    0 2.5px 0 0 #fff inset,
+    0 -2.5px 0 0 #888 inset;
+  border: 2px solid #d1d5db;
+  padding: 2.5rem 2rem;
+  min-width: 420px;
+  max-width: 600px;
+  transition: transform 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  position: relative;
+  overflow: visible;
+  perspective: 800px;
+}
+
+.metallic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 2.5rem;
+  background: linear-gradient(120deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.metallic-card:hover {
+  transform: translateY(-8px) scale(1.03) rotateX(6deg);
+  box-shadow:
+    0 16px 48px 0 rgba(30, 30, 30, 0.40),
+    0 2.5px 0 0 #fff inset,
+    0 -2.5px 0 0 #888 inset;
+}
+
+.metallic-card h3, .metallic-card p {
+  position: relative;
+  z-index: 2;
+}
+
+.bubble-card {
+  min-width: 350px;
+  max-width: 700px;
+  border-radius: 3rem;
+}
+
+.bubble-highlight {
+  box-shadow: 0 0 60px 20px rgba(255,255,255,0.25);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}

@@ -1,6 +1,7 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {format, parseISO} from 'date-fns'
 import {defineField, defineType} from 'sanity'
+import {callToAction} from '../objects/callToAction'
 
 /**
  * Post schema.  Define and edit the fields for the 'post' content type.
@@ -81,6 +82,12 @@ export const post = defineType({
       title: 'Author',
       type: 'reference',
       to: [{type: 'person'}],
+    }),
+    defineField({
+      name: 'cta',
+      title: 'Call to Action',
+      type: 'callToAction',
+      description: 'Optional call to action for the post',
     }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views

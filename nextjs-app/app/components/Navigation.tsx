@@ -3,10 +3,15 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function Navigation() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +23,35 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle hash-based navigation
+  useEffect(() => {
+    if (isHomePage) {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          // Small delay to ensure the page is fully loaded
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    }
+  }, [isHomePage, pathname]);
+
+  const handleNavigation = (section: string) => {
+    if (isHomePage) {
+      // If on home page, just scroll to section
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If on another page, navigate to home page and then scroll to section
+      router.push(`/#${section}`);
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
@@ -28,7 +62,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-24 backdrop-blur-xl bg-white/70 border-b border-white/20 px-8">
           <Link href="/" className="flex items-center">
             <Image
-              src="/Arbiter Logo/Primary Logo/Logo-primary.png"
+              src="/Arbiter Logo/Primary Logo/Logo-primary-edited.png"
               alt="Arbiter PM Logo"
               width={300}
               height={150}
@@ -38,15 +72,24 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-12">
-            <Link href="#services" className="text-white hover:text-purple-400 transition-colors text-lg">
+            <button 
+              onClick={() => handleNavigation('services')}
+              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+            >
               Services
-            </Link>
-            <Link href="#projects" className="text-white hover:text-purple-400 transition-colors text-lg">
+            </button>
+            <button 
+              onClick={() => handleNavigation('projects')}
+              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+            >
               Projects
-            </Link>
-            <Link href="#contact" className="text-white hover:text-purple-400 transition-colors text-lg">
+            </button>
+            <button 
+              onClick={() => handleNavigation('contact')}
+              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+            >
               Contact
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -79,27 +122,33 @@ export default function Navigation() {
           } overflow-hidden`}
         >
           <div className="flex flex-col space-y-6 p-6">
-            <Link
-              href="#services"
-              className="text-white hover:text-purple-400 transition-colors text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                handleNavigation('services');
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
             >
               Services
-            </Link>
-            <Link
-              href="#projects"
-              className="text-white hover:text-purple-400 transition-colors text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
+            </button>
+            <button
+              onClick={() => {
+                handleNavigation('projects');
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
             >
               Projects
-            </Link>
-            <Link
-              href="#contact"
-              className="text-white hover:text-purple-400 transition-colors text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
+            </button>
+            <button
+              onClick={() => {
+                handleNavigation('contact');
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
             >
               Contact
-            </Link>
+            </button>
           </div>
         </div>
       </div>

@@ -16,6 +16,13 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
   }, [progress, onLoadingComplete]);
 
   useEffect(() => {
+    // Check if we've already loaded before
+    const hasLoadedBefore = localStorage.getItem('hasVisitedBefore');
+    if (hasLoadedBefore) {
+      onLoadingComplete();
+      return;
+    }
+
     const interval = setInterval(() => {
       setProgress((prev) => {
         const newProgress = prev + 1;
@@ -28,7 +35,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
     }, 30);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [onLoadingComplete]);
 
   useEffect(() => {
     handleProgressComplete();

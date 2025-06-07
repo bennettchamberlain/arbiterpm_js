@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Toaster } from "sonner";
-import { nohemi } from './fonts';
+import { alteHaasGrotesk } from './fonts';
 
 import DraftModeToast from "@/app/components/DraftModeToast";
 import Footer from "@/app/components/Footer";
@@ -59,7 +59,7 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${nohemi.variable} font-sans bg-black text-white`}>
+    <html lang="en" className={`${alteHaasGrotesk.variable} font-sans bg-black text-white`}>
       <body>
         <section className="min-h-screen">
           <Toaster />
