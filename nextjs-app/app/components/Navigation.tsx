@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function Navigation() {
+function NavigationContent() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -53,52 +53,57 @@ export default function Navigation() {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-    >
-      <div className="w-full">
-        <div className="flex items-center justify-between h-24 backdrop-blur-xl bg-white/70 border-b border-white/20 px-8">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isVisible ? 'bg-white/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
               src="/Arbiter Logo/Primary Logo/Logo-primary-edited.png"
               alt="Arbiter PM Logo"
-              width={300}
-              height={150}
-              className="h-20 w-auto"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-12">
-            <button 
+          <div className="hidden md:flex items-center space-x-8">
+            <button
               onClick={() => handleNavigation('services')}
-              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+              className="text-gray-800 hover:text-purple-900 transition-colors font-bold"
             >
               Services
             </button>
-            <button 
+            <button
               onClick={() => handleNavigation('projects')}
-              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+              className="text-gray-800 hover:text-purple-900 transition-colors font-bold"
             >
               Projects
             </button>
-            <button 
+            <button
               onClick={() => handleNavigation('contact')}
-              className="text-gray-700 font-bold hover:text-purple-900 transition-colors text-lg"
+              className="text-gray-800 hover:text-purple-900 transition-colors font-bold"
             >
               Contact
             </button>
+            <Link
+              href="/sitemap"
+              className="text-gray-800 hover:text-purple-900 transition-colors font-bold"
+            >
+              Sitemap
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-gray-800"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <svg
-              className="w-8 h-8"
+              className="h-6 w-6"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -116,42 +121,55 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu */}
-        <div
-          className={`md:hidden backdrop-blur-xl bg-white/40 transition-all duration-300 ${
-            isMobileMenuOpen ? 'max-h-64' : 'max-h-0'
-          } overflow-hidden`}
-        >
-          <div className="flex flex-col space-y-6 p-6">
-            <button
-              onClick={() => {
-                handleNavigation('services');
-                setIsMobileMenuOpen(false);
-              }}
-              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
-            >
-              Services
-            </button>
-            <button
-              onClick={() => {
-                handleNavigation('projects');
-                setIsMobileMenuOpen(false);
-              }}
-              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => {
-                handleNavigation('contact');
-                setIsMobileMenuOpen(false);
-              }}
-              className="text-gray-800 font-bold hover:text-purple-400 transition-colors text-lg text-left"
-            >
-              Contact
-            </button>
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white/80 backdrop-blur-md">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <button
+                onClick={() => {
+                  handleNavigation('services');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block w-full text-left px-3 py-2 text-gray-800 hover:text-purple-900 transition-colors font-bold"
+              >
+                Services
+              </button>
+              <button
+                onClick={() => {
+                  handleNavigation('projects');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block w-full text-left px-3 py-2 text-gray-800 hover:text-purple-900 transition-colors font-bold"
+              >
+                Projects
+              </button>
+              <button
+                onClick={() => {
+                  handleNavigation('contact');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block w-full text-left px-3 py-2 text-gray-800 hover:text-purple-900 transition-colors font-bold"
+              >
+                Contact
+              </button>
+              <Link
+                href="/sitemap"
+                className="block w-full text-left px-3 py-2 text-gray-800 hover:text-purple-900 transition-colors font-bold"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Sitemap
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
+  );
+}
+
+export default function Navigation() {
+  return (
+    <Suspense fallback={<div className="h-16" />}>
+      <NavigationContent />
+    </Suspense>
   );
 } 
