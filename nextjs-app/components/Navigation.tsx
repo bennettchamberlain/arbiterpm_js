@@ -35,7 +35,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-24 backdrop-blur-xl bg-white/70 border-b border-white/20 px-8">
           <Link href="/" className="flex items-center">
             <Image
-              src="/Arbiter Logo/Primary Logo/Logo-primary-edited.png"
+              src="/Arbiter_Logo/Primary_Logo/Logo-primary-edited.png"
               alt="Arbiter PM Logo"
               width={300}
               height={150}

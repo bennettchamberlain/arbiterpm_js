@@ -16,7 +16,7 @@ function NavigationContent() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      setIsVisible(scrollPosition > window.innerHeight * 0.25);
+      setIsVisible(scrollPosition > window.innerHeight * 0.5);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -54,18 +54,18 @@ function NavigationContent() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isVisible ? 'bg-white/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      isVisible ? 'bg-white/80 backdrop-blur-md shadow-lg translate-y-0' : 'translate-y-[-100%]'
     }`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center py-2">
             <Image
-              src="/Arbiter Logo/Primary Logo/Logo-primary-edited.png"
+              src="/Arbiter_Logo/Primary_Logo/Logo-primary-edited.png"
               alt="Arbiter PM Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={180}
+              height={60}
+              className="h-14 w-auto"
             />
           </Link>
 
@@ -89,12 +89,6 @@ function NavigationContent() {
             >
               Contact
             </button>
-            <Link
-              href="/sitemap"
-              className="text-gray-800 hover:text-purple-900 transition-colors font-bold"
-            >
-              Sitemap
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -151,13 +145,6 @@ function NavigationContent() {
               >
                 Contact
               </button>
-              <Link
-                href="/sitemap"
-                className="block w-full text-left px-3 py-2 text-gray-800 hover:text-purple-900 transition-colors font-bold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Sitemap
-              </Link>
             </div>
           </div>
         )}

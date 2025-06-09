@@ -20,7 +20,7 @@ export default function Footer() {
           <div className="w-full max-w-2xl">
             <div className="flex justify-center">
               <Image
-                src="/Arbiter Logo/Primary Logo/Logo-primary-edited.png"
+                src="/Arbiter_Logo/Primary_Logo/Logo-primary-edited.png"
                 alt="Arbiter PM Logo"
                 width={200}
                 height={100}
