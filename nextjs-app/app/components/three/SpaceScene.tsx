@@ -152,7 +152,7 @@ const DeepStarField = () => {
 
 // 3D Logo component
 const Logo3D = () => {
-  const { scene } = useGLTF('/Arbiter_Logo/Logo_Mark/Purple_Rounded_letter.glb');
+  const { scene } = useGLTF('/Arbiter_Logo/Logo_Mark/Purple_rounded_letter.glb');
   const logoRef = useRef<THREE.Group>(null);
   const [rotation, setRotation] = useState(0);
   const [visible, setVisible] = useState(true);
